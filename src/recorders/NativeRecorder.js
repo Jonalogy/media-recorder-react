@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Inspired by [jmmendivil](https://github.com/jmmendivil/react-with-media-recorder/blob/master/src/WithMediaRecorder.js)
 export default class NativeRecorder extends React.Component {
   mimeType = { 'type': 'audio/wav' };
   mediaChunks = []
@@ -25,7 +26,11 @@ export default class NativeRecorder extends React.Component {
   async mediaChecks() {
     if (!this.hasUserMedia()) throw new Error('Navigator does not support video media record.')
     if (!await this.hasAudioVideoDevices()) throw new Error('Not audio/video input devices detected.')
-    this.mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true })
+    try {
+      this.mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true })
+    } catch (err) {
+      throw new Error('Media access not allowed, cant record.')
+    }
     this.recorder = this.createNewRecorder(this.mediaStream)
     const mimeSupported = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg'].filter(MediaRecorder.isTypeSupported)
     this.mimeType = mimeSupported[0]
