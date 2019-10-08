@@ -9776,6 +9776,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
+web-audio-recorder-js-webpack@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/web-audio-recorder-js-webpack/-/web-audio-recorder-js-webpack-0.0.1.tgz#4c41a9a81d613b810ddd17d510e1c656c0bc02bf"
+  integrity sha512-+e9Xv+u3XtyUyQ/L6hOsDOu1uy4ZiQ+4Z3VFRQQAR6XaWha+kWIyK1IcCTxxr29zAUZvdGeNDn21IkOyuwYsYw==
+
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
