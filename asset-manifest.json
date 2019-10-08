@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/media-recorder-react/static/css/main.47ce8cc1.chunk.css",
+    "main.js": "/media-recorder-react/static/js/main.7fb9d5e5.chunk.js",
+    "main.js.map": "/media-recorder-react/static/js/main.7fb9d5e5.chunk.js.map",
+    "runtime-main.js": "/media-recorder-react/static/js/runtime-main.ef0963da.js",
+    "runtime-main.js.map": "/media-recorder-react/static/js/runtime-main.ef0963da.js.map",
+    "static/js/2.a07915fb.chunk.js": "/media-recorder-react/static/js/2.a07915fb.chunk.js",
+    "static/js/2.a07915fb.chunk.js.map": "/media-recorder-react/static/js/2.a07915fb.chunk.js.map",
+    "index.html": "/media-recorder-react/index.html",
+    "precache-manifest.8f45d3d96d7ad843d9be8164b77b7989.js": "/media-recorder-react/precache-manifest.8f45d3d96d7ad843d9be8164b77b7989.js",
+    "service-worker.js": "/media-recorder-react/service-worker.js",
+    "static/css/main.47ce8cc1.chunk.css.map": "/media-recorder-react/static/css/main.47ce8cc1.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef0963da.js",
+    "static/js/2.a07915fb.chunk.js",
+    "static/css/main.47ce8cc1.chunk.css",
+    "static/js/main.7fb9d5e5.chunk.js"
+  ]
+}
