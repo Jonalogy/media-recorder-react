@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class Recorder extends React.Component {
-  blobMediaType = { 'type': 'audio/ogg; codecs=opus' };
+  mimeType = { 'type': 'audio/wav' };
   mediaChunks = []
   mediaStream = null
   recorder = null
@@ -23,6 +23,8 @@ export default class Recorder extends React.Component {
     if (!await this.hasAudioVideoDevices()) throw new Error('Not audio/video input devices detected.')
     this.mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true })
     this.recorder = this.createNewRecorder(this.mediaStream)
+    const mimeSupported = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg'].filter(MediaRecorder.isTypeSupported)
+    this.mimeType = mimeSupported[0]
   }
 
   hasUserMedia() {
@@ -72,7 +74,7 @@ export default class Recorder extends React.Component {
 
   saveMediaBlob = () => {
     try {
-      return new window.Blob(this.mediaChunks, { type: this.blobMediaType })
+      return new window.Blob(this.mediaChunks, { type: this.mimeType })
     } catch (e) {
       console.error('Error generating file:', e)
     }
@@ -97,10 +99,10 @@ export default class Recorder extends React.Component {
       <button onClick={this.record}>Record</button>
       {
         this.state.audioBlob ?
-        <button onClick={this.onReset}>Reset</button> :
-        <button onClick={this.stopRecord}>Stop</button>
+          <button onClick={this.onReset}>Reset</button> :
+          <button onClick={this.stopRecord}>Stop</button>
       }
-      
+
       {
         this.state.audioBlob &&
         <article>
