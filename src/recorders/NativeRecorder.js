@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Recorder extends React.Component {
+export default class NativeRecorder extends React.Component {
   mimeType = { 'type': 'audio/wav' };
   mediaChunks = []
   mediaStream = null
