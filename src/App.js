@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css';
-import Recorder from './Recorder';
+import NativeRecorder from './recorders/Recorder';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <header className="App-header">
         Record Audio
       </header>
-      <Recorder />
+      <NativeRecorder />
     </div>
   );
 }
