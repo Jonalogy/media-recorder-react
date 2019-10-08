@@ -18,6 +18,10 @@ export default class Recorder extends React.Component {
     this.mediaChecks()
   }
 
+  clickToRecord = () => this.recorder.start()
+
+  clickToStopRecording = () => this.recorder.stop()
+
   async mediaChecks() {
     if (!this.hasUserMedia()) throw new Error('Navigator does not support video media record.')
     if (!await this.hasAudioVideoDevices()) throw new Error('Not audio/video input devices detected.')
@@ -27,25 +31,21 @@ export default class Recorder extends React.Component {
     this.mimeType = mimeSupported[0]
   }
 
-  hasUserMedia() {
-    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-  }
+  hasUserMedia = () => Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
 
-  hasAudioVideoDevices() {
+  hasAudioVideoDevices = async () => {
     // TODO: only ask for what is needed
     let hasAudio = false
     let hasVideo = false
-    return navigator.mediaDevices.enumerateDevices()
-      .then(devices => {
-        devices.forEach(device => {
-          if (device.kind === 'audioinput') hasAudio = true
-          if (device.kind === 'videoinput') hasVideo = true
-        })
-        return (hasAudio && hasVideo)
-      })
+    const devices = await navigator.mediaDevices.enumerateDevices()
+    devices.forEach(device => {
+      if (device.kind === 'audioinput') hasAudio = true
+      if (device.kind === 'videoinput') hasVideo = true
+    })
+    return (hasAudio && hasVideo)
   }
 
-  createNewRecorder = (mediaStream) => {
+  createNewRecorder = mediaStream => {
     const recorder = new window.MediaRecorder(mediaStream)
     recorder.ondataavailable = evt => {
       console.log("Pushing...", evt.data)
@@ -66,10 +66,6 @@ export default class Recorder extends React.Component {
     return recorder
   }
 
-  record = () => this.recorder.start()
-
-  stopRecord = () => this.recorder.stop()
-
   onRecordStart = () => console.log("Starting Recording")
 
   saveMediaBlob = () => {
@@ -78,10 +74,9 @@ export default class Recorder extends React.Component {
     } catch (e) {
       console.error('Error generating file:', e)
     }
-
   }
 
-  onRecordStop = (audioBlob) => {
+  onRecordStop = audioBlob => {
     this.blob = audioBlob
     this.setState({ audioBlob: URL.createObjectURL(audioBlob) })
   }
@@ -96,11 +91,11 @@ export default class Recorder extends React.Component {
 
   render() {
     return <div>
-      <button onClick={this.record}>Record</button>
+      <button onClick={this.clickToRecord}>Record</button>
       {
         this.state.audioBlob ?
           <button onClick={this.onReset}>Reset</button> :
-          <button onClick={this.stopRecord}>Stop</button>
+          <button onClick={this.clickToStopRecording}>Stop</button>
       }
 
       {
