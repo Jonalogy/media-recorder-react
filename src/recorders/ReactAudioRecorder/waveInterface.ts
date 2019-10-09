@@ -69,26 +69,37 @@ export default class WAVEInterface {
   }
 
   public startPlayback(loop: boolean = false, onended: () => void) {
-    // tslint:disable-next-line:no-console
-    console.log("startPlayback");
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsArrayBuffer(this.audioData!!);
-      reader.onerror = (e: ProgressEvent<FileReader>) => {
-        // tslint:disable-next-line:no-console
-        console.error(e);
+      try {
+        reader.readAsArrayBuffer(this.audioData!!);
+      } catch (e) {
+        reject(new Error("Audio Data is empty!"));
+      }
+      reader.onerror = (error: ProgressEvent<FileReader>) => {
+        reject(error);
       };
       reader.onloadend = () => {
-        WAVEInterface.audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer: AudioBuffer) => {
-          const source = WAVEInterface.audioContext.createBufferSource();
-          source.buffer = buffer;
-          source.connect(WAVEInterface.audioContext.destination);
-          source.loop = loop;
-          source.start(0);
-          source.onended = onended;
-          this.playbackNode = source;
-          resolve(source);
-        });
+        console.log("Audio buffer read, starting to decode"); // tslint:disable-line:no-console
+        WAVEInterface.audioContext.decodeAudioData(
+          reader.result as ArrayBuffer,
+          (buffer: AudioBuffer) => {
+            const source = WAVEInterface.audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(WAVEInterface.audioContext.destination);
+            source.loop = loop;
+            source.start(0);
+            source.onended = onended;
+            this.playbackNode = source;
+            resolve(source);
+          },
+          (error: DecodeErrorCallback) => {
+            // Decode Audio Data is flaky!
+            // tslint:disable-next-line:no-console
+            console.log("Error @decodeAudioData");
+            reject(error);
+          },
+        );
       };
     });
   }

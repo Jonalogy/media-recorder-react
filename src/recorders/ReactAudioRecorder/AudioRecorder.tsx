@@ -56,7 +56,7 @@ export default class AudioRecorder extends React.Component<IAudioRecorderProps, 
     removeLabel: "✖ Remove",
     downloadLabel: "\ud83d\udcbe Save", // unicode floppy disk
   };
-  public waveInterface: WAVEInterface =  new WAVEInterface();
+  public waveInterface: WAVEInterface = new WAVEInterface();
 
   public state: IAudioRecorderState = {
     isRecording: false,
@@ -114,10 +114,12 @@ export default class AudioRecorder extends React.Component<IAudioRecorderProps, 
 
   public startPlayback() {
     if (!this.state.isPlaying) {
-      this.waveInterface.startPlayback(this.props.loop, this.onAudioEnded).then(() => {
-        this.setState({ isPlaying: true });
-        if (this.props.onPlay) { this.props.onPlay(); }
-      });
+      this.waveInterface.startPlayback(this.props.loop, this.onAudioEnded)
+        .then(() => {
+          this.setState({ isPlaying: true });
+          if (this.props.onPlay) { this.props.onPlay(); }
+        })
+        .catch((e: ProgressEvent<FileReader>) => console.error(e)); // tslint:disable-line:no-console
     }
   }
 
