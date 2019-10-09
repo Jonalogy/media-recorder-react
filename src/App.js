@@ -1,6 +1,8 @@
 import React from 'react'
 import './App.css';
+// eslint-disable-next-line no-unused-vars
 import NativeRecorder from './recorders/NativeRecorder';
+import ReactAudioRecorder from './recorders/ReactAudioRecorder/AudioRecorder.tsx';
 
 function App() {
   return (
@@ -8,7 +10,8 @@ function App() {
       <header className="App-header">
         Record Audio
       </header>
-      <NativeRecorder />
+      <ReactAudioRecorder filename="recording.wav" />
+      {/* <NativeRecorder /> */}
     </div>
   );
 }
