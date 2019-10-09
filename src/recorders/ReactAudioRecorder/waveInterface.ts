@@ -76,9 +76,7 @@ export default class WAVEInterface {
       } catch (e) {
         reject(new Error("Audio Data is empty!"));
       }
-      reader.onerror = (error: ProgressEvent<FileReader>) => {
-        reject(error);
-      };
+      reader.onerror = (error: ProgressEvent<FileReader>) => reject(error);
       reader.onloadend = () => {
         console.log("Audio buffer read, starting to decode"); // tslint:disable-line:no-console
         WAVEInterface.audioContext.decodeAudioData(
