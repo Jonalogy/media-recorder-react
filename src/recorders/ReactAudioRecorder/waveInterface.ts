@@ -21,11 +21,6 @@ export default class WAVEInterface {
     }
     this.encodingCache = encodeWAV(this.buffers, this.bufferLength, WAVEInterface.audioContext.sampleRate);
     return this.encodingCache;
-
-    // const audio =  this.encodingCache || encodeWAV(this.buffers, this.bufferLength, WAVEInterface.audioContext.sampleRate);
-    // // tslint:disable-next-line:no-console
-    // console.log("audioData", audio);
-    // return audio;
   }
 
   public startRecording() {
