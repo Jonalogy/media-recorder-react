@@ -119,7 +119,10 @@ export default class AudioRecorder extends React.Component<IAudioRecorderProps, 
           this.setState({ isPlaying: true });
           if (this.props.onPlay) { this.props.onPlay(); }
         })
-        .catch((e: ProgressEvent<FileReader>) => console.error(e)); // tslint:disable-line:no-console
+        .catch((e: ProgressEvent<FileReader>) => {
+          console.error(e); // tslint:disable-line:no-console
+          window.alert("Please refresh your browser");
+        });
     }
   }
 
