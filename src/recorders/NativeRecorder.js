@@ -23,16 +23,20 @@ export default class NativeRecorder extends React.Component {
   clickToStopRecording = () => this.recorder.stop()
 
   async mediaChecks() {
-    if (!this.hasUserMedia()) throw new Error('Navigator does not support video media record.')
+    let hasUserMedia = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    if (!hasUserMedia()) throw new Error('Navigator does not support video media record.')
     if (!await this.hasAudioVideoDevices()) throw new Error('Not audio/video input devices detected.')
-    try { this.mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true }) }
-    catch (err) { throw new Error("Yikes! Unable to get user media!") } 
+    
+    try {
+      this.mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (err) {
+      throw new Error("Yikes! Unable to get user media!");
+    }
+
     this.recorder = this.createNewRecorder(this.mediaStream)
     const mimeSupported = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg'].filter(MediaRecorder.isTypeSupported)
     this.mimeType = mimeSupported[0]
   }
-
-  hasUserMedia = () => Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
 
   hasAudioVideoDevices = async () => {
     // TODO: only ask for what is needed

@@ -34,6 +34,8 @@ export default function encodeWAV(
   sampleRate: number,
   volume: number = 1,
 ): Blob {
+  // tslint:disable-next-line:no-console
+  console.log("encoding...");
   const left = mergeBuffers(buffers[0], bufferLength);
   const right = mergeBuffers(buffers[1], bufferLength);
   const interleaved = interleave(left, right);

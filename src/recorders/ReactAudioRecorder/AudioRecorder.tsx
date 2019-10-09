@@ -56,7 +56,7 @@ export default class AudioRecorder extends React.Component<IAudioRecorderProps, 
     removeLabel: "✖ Remove",
     downloadLabel: "\ud83d\udcbe Save", // unicode floppy disk
   };
-  public waveInterface =  new WAVEInterface();
+  public waveInterface: WAVEInterface =  new WAVEInterface();
 
   public state: IAudioRecorderState = {
     isRecording: false,

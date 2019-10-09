@@ -3,28 +3,6 @@ import AudioContext from "./AudioContext.ts";
 // @ts-ignore
 import encodeWAV from "./waveEncoder.ts";
 // import getUserMedia from './getUserMedia.ts';
-
-async function hasAudioVideoDevices() {
-  // TODO: only ask for what is needed
-  let hasAudio = false;
-  let hasVideo = false;
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  devices.forEach((device) => {
-    if (device.kind === "audioinput") { hasAudio = true; }
-    if (device.kind === "videoinput") { hasVideo = true; }
-  });
-  return (hasAudio && hasVideo);
-}
-
-async function mediaChecks() {
-  const hasUserMedia = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-  if (!hasUserMedia) { throw new Error("Navigator does not support video media record."); }
-  if (!await hasAudioVideoDevices()) { throw new Error("Not audio/video input devices detected."); }
-  let mediaStream: MediaStream;
-  try { mediaStream = await window.navigator.mediaDevices.getUserMedia({ audio: true }); } catch (err) { throw new Error("Yikes! Unable to get user media!"); }
-  return mediaStream;
-}
-
 export default class WAVEInterface {
   public static audioContext: AudioContext = new AudioContext();
   public static bufferSize = 2048;
@@ -33,12 +11,21 @@ export default class WAVEInterface {
   public recordingNodes: AudioNode[] = [];
   public recordingStream?: MediaStream;
   public buffers?: Float32Array[][]; // one buffer for each channel L,R
-  public encodingCache?: Blob | null;
+  private encodingCache?: Blob | null;
 
   get bufferLength() { return this.buffers!![0].length * WAVEInterface.bufferSize; }
   get audioDuration() { return this.bufferLength / WAVEInterface.audioContext.sampleRate; }
   get audioData() {
-    return this.encodingCache || encodeWAV(this.buffers, this.bufferLength, WAVEInterface.audioContext.sampleRate);
+    if (this.encodingCache) {
+      return this.encodingCache;
+    }
+    this.encodingCache = encodeWAV(this.buffers, this.bufferLength, WAVEInterface.audioContext.sampleRate);
+    return this.encodingCache;
+
+    // const audio =  this.encodingCache || encodeWAV(this.buffers, this.bufferLength, WAVEInterface.audioContext.sampleRate);
+    // // tslint:disable-next-line:no-console
+    // console.log("audioData", audio);
+    // return audio;
   }
 
   public startRecording() {
@@ -87,9 +74,15 @@ export default class WAVEInterface {
   }
 
   public startPlayback(loop: boolean = false, onended: () => void) {
+    // tslint:disable-next-line:no-console
+    console.log("startPlayback");
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsArrayBuffer(this.audioData);
+      reader.readAsArrayBuffer(this.audioData!!);
+      reader.onerror = (e: ProgressEvent<FileReader>) => {
+        // tslint:disable-next-line:no-console
+        console.error(e);
+      };
       reader.onloadend = () => {
         WAVEInterface.audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer: AudioBuffer) => {
           const source = WAVEInterface.audioContext.createBufferSource();
