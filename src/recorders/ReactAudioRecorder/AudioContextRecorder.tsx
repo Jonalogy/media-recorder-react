@@ -3,9 +3,9 @@ import * as React from "react";
 import downloadBlob from "./downloadBlob.ts";
 // @ts-ignore
 import WAVEInterface from "./waveInterface.ts";
+import { API } from "../../api";
 
 // Forked from https://github.com/danrouse/react-audio-recorder
-
 interface IAudioRecorderChangeEvent {
   duration: number;
   audioData?: Blob | null;
@@ -166,6 +166,18 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
     }
   }
 
+  public onSendClick = () => {
+    const formData = new FormData();
+    formData.append("audio", this.state.audioData as Blob);
+    fetch(API.postAudioToServer, {
+      method: "POST",
+      body: formData
+    })
+    .then((res: Response) => res.json())
+    .catch(err => console.error(err))
+    .then(res => console.log(res))
+  }
+
   public render() {
     return (
       <div className="AudioRecorder">
@@ -203,6 +215,7 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
             </button>
             <button
               className="AudioRecorder-download"
+              onClick={this.onSendClick}
             >
               Send
             </button>
