@@ -41,7 +41,7 @@ interface IAudioRecorderState {
   mediaStream?: MediaStream;
 }
 
-export default class AudioRecorder extends React.Component<IAudioRecorderProps, IAudioRecorderState> {
+export default class AudioContextRecorder extends React.Component<IAudioRecorderProps, IAudioRecorderState> {
 
   public static defaultProps = {
     loop: false,
@@ -119,7 +119,7 @@ export default class AudioRecorder extends React.Component<IAudioRecorderProps, 
           this.setState({ isPlaying: true });
           if (this.props.onPlay) { this.props.onPlay(); }
         })
-        .catch((e: ProgressEvent<FileReader>) => {
+        .catch((e: ProgressEvent) => {
           console.error(e); // tslint:disable-line:no-console
           window.alert("Please refresh your browser");
         });
