@@ -6,7 +6,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import NativeRecorder from './recorders/Recorder';
+// import AudioMediaRecorder from './recorders/AudioMediaRecorder';
+import AudioContextRecorder from './recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         
         <Switch>
           <Route exact path="/">
-            <NativeRecorder />
+            <AudioContextRecorder filename="recording.wav" />
+            {/* <AudioMediaRecorder /> */}
           </Route>
           <Route exact path="/yay">
             <h1>Hey!</h1>
