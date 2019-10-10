@@ -194,12 +194,19 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
           </button>
         }
         {this.state.audioData && this.props.downloadable &&
-          <button
-            className="AudioRecorder-download"
-            onClick={this.onDownloadClick}
-          >
-            {this.props.downloadLabel}
-          </button>
+          <>
+            <button
+              className="AudioRecorder-download"
+              onClick={this.onDownloadClick}
+            >
+              {this.props.downloadLabel}
+            </button>
+            <button
+              className="AudioRecorder-download"
+            >
+              Send
+            </button>
+          </>
         }
       </div>
     );
