@@ -1,27 +1,46 @@
 import * as React from "react";
-import { ICommonProps } from "../..";
+import { ICommonProps } from "../../Wizard";
+import AudioContextRecorder from "recorders/ReactAudioRecorder/AudioContextRecorder";
 
-export const Main = (props: ICommonProps) => (
-  <div className="Page">
-    <section className="Top">
-      <div className="mainText">
-        Hello, how I can help you today?
+import "./Main.scss"
+import recordButtonImg from "images/button-record.svg";
+
+export class Main extends React.Component<ICommonProps> {
+
+  onClickRecord = () => {
+    this.props.nextStep("result")
+    this.props.setState({ predictedResult: "Hello There" })
+  }
+
+  render () {
+    return (
+      <div className="Page">
+        <section className="Top">
+          <div className="mainText">
+            Hello, how I can help you today?
+          </div>
+        </section>
+    
+        <section className="Middle">
+         
+        </section>
+    
+        <section className="Bottom">
+          <div className="userDirections">
+            Click &#127897; and start speaking
+          </div>
+          <AudioContextRecorder {...this.props}/>
+          <div className="mic-holder">
+              <img className="mic-button"
+                   src={recordButtonImg}
+                   alt="record"
+                   onClick={this.onClickRecord} />
+            {/* <div className="mic-button"
+                 onClick={() => props.nextStep("result")} /> */}
+          </div>
+        </section>
+    
       </div>
-    </section>
-
-    <section className="Middle">
-     
-    </section>
-
-    <section className="Bottom">
-      <div className="userDirections">
-        Click &#127897; and start speaking
-      </div>
-      <div className="mic-holder">
-        <div className="mic-button"
-             onClick={() => props.nextStep("result")} />
-      </div>
-    </section>
-
-  </div>
-)
+    )
+  }
+}

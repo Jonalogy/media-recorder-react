@@ -3,7 +3,7 @@ import * as React from "react";
 import downloadBlob from "./downloadBlob.ts";
 // @ts-ignore
 import WAVEInterface from "./waveInterface.ts";
-import { API } from "../../api";
+import { API } from "api";
 
 // Forked from https://github.com/danrouse/react-audio-recorder
 interface IAudioRecorderChangeEvent {
@@ -32,6 +32,8 @@ interface IAudioRecorderProps {
   recordingLabel?: string;
   removeLabel?: string;
   downloadLabel?: string;
+
+  nextStep: (s: string) => void;
 }
 
 interface IAudioRecorderState {
@@ -169,13 +171,16 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
   public onSendClick = () => {
     const formData = new FormData();
     formData.append("audio", this.state.audioData as Blob);
-    fetch(API.postAudioToServer, {
+    fetch(API.speechToText, {
       method: "POST",
       body: formData
     })
     .then((res: Response) => res.json())
     .catch(err => console.error(err))
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      this.props.nextStep("result")
+    })
   }
 
   public render() {
@@ -197,7 +202,7 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
           {!this.state.audioData && !this.state.isRecording && this.props.recordLabel}
           {!this.state.audioData && this.state.isRecording && this.props.recordingLabel}
         </button>
-        {this.state.audioData &&
+        { false && this.state.audioData &&
           <button
             className="AudioRecorder-remove"
             onClick={this.onRemoveClick}
@@ -207,12 +212,12 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
         }
         {this.state.audioData && this.props.downloadable &&
           <>
-            <button
+            {/* <button
               className="AudioRecorder-download"
               onClick={this.onDownloadClick}
             >
               {this.props.downloadLabel}
-            </button>
+            </button> */}
             <button
               className="AudioRecorder-download"
               onClick={this.onSendClick}

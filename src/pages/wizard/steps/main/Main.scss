@@ -1,21 +1,4 @@
-%column {
-  display: flex;
-  flex-direction: column;
-}
-
-%row {
-  display: flex;
-  flex-direction: row;
-}
-
-%section {
-  flex: 1 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
+@import "../../../common.scss";
 
 .Page {
   @extend %column;
@@ -28,7 +11,7 @@
 
     .mainText {
       text-align: center;
-      font-size: 3em;
+      font-size: $largeFont;
     }
   }
   
@@ -38,28 +21,24 @@
   
   .Bottom {
     @extend %section;
-    @extend %column;
     justify-content: space-evenly;
   
+    .userDirections {
+      text-align: center;
+    }
+
     .mic-holder {
       @extend %row;
       justify-content: center;
-      .mic-button {
-        height: 3em;
-        width: 3em;
-        border-radius: 3em;
-        background-color: red;
-      }
-    }
+      height: 5em;
 
-    .textArea {
-      height: 80%;
+      
     }
   }
 }
 
-.userDirections {
-  text-align: center;
+
+.mic-button {
+  height: 100%;
+  cursor: pointer;
 }
-
-
