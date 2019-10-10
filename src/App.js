@@ -4,12 +4,6 @@ import './App.css';
 import NativeRecorder from './recorders/NativeRecorder';
 import ReactAudioRecorder from './recorders/ReactAudioRecorder/AudioRecorder.tsx';
 
-/*
-  Implement React-Router
-  * https://reacttraining.com/react-router/core/guides/quick-start
-  * https://redux.js.org/advanced/usage-with-react-router
-*/
-
 function App() {
   return (
     <div className="App">
