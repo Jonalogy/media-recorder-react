@@ -1,9 +1,9 @@
 import * as React from "react";
-import './Page.css';
+import './Page.scss';
 
 export const Page = (props: React.Props<{}>) => {
   return(
-    <div className="Page">
+    <div className="PageContainer">
       { props.children }
     </div>
   )

@@ -1,0 +1,58 @@
+%column {
+  display: flex;
+  flex-direction: column;
+}
+
+%row {
+  display: flex;
+  flex-direction: row;
+}
+
+%section {
+  flex: 1 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.Result {
+  @extend %column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .Top {
+    @extend %section;
+
+    .mainText {
+      text-align: center;
+      font-size: 3em;
+    }
+  }
+  
+  .Middle {
+    @extend %section;
+
+    .playButton {
+      align-self: center;
+      width: max-content;
+    }
+  }
+  
+  .Bottom {
+    @extend %section;
+    justify-content: space-evenly;
+    
+    .textArea {
+      height: 80%;
+    }
+  }
+}
+
+.userDirections {
+  text-align: center;
+}
+
+

@@ -11,18 +11,20 @@ import AudioMediaRecorder from './recorders/AudioMediaRecorder';
 import AudioContextRecorder from './recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
 import { TextToSpeech } from './pages/TextToSpeech';
 import { Page } from './pages/Page';
-import { Wizard } from './pages/main/Wizard';
+import { Wizard } from './pages/wizard';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Link to="/">Context Recorder</Link>
+        {/* <Link to="/">Context Recorder</Link>
         <br />
-        <Link to="/text2Speech">Text2Speech</Link>
+        <Link to="/text2Speech">Text2Speech</Link> */}
         <Switch>
           <Route exact path="/">
-            <Wizard />
+            <Page>
+              <Wizard />
+            </Page>
           </Route>
           <Route exact path="/bar">
             <AudioContextRecorder filename="recording.wav" />

@@ -1,8 +1,10 @@
 .App {
-  text-align: center;
   background-color: #2e2a2a;
   height: 100vh;
   color: white;
+
+  display: flex;
+  justify-content: center;
 }
 
 .App-header {
