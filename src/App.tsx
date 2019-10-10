@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import AudioMediaRecorder from './recorders/AudioMediaRecorder';
+// @ts-ignore
 import AudioContextRecorder from './recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         
         <Link to="/">Context Recorder</Link>
         <br />
-        <Link to="/media">Media Recorder</Link>
+        <Link to="/azure">Media Recorder</Link>
         
         <Switch>
           <Route exact path="/">
