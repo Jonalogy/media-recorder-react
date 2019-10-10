@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.css';
+import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,25 +9,26 @@ import {
 import AudioMediaRecorder from './recorders/AudioMediaRecorder';
 // @ts-ignore
 import AudioContextRecorder from './recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
+import { TextToSpeech } from './pages/TextToSpeech';
+import { Page } from './pages/Page';
+import { Wizard } from './pages/main/Wizard';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <header className="App-header">
-          Record Audio
-        </header>
-        
         <Link to="/">Context Recorder</Link>
         <br />
-        <Link to="/azure">Media Recorder</Link>
-        
+        <Link to="/text2Speech">Text2Speech</Link>
         <Switch>
           <Route exact path="/">
+            <Wizard />
+          </Route>
+          <Route exact path="/bar">
             <AudioContextRecorder filename="recording.wav" />
           </Route>
-          <Route exact path="/media">
-            <AudioMediaRecorder />
+          <Route exact path="/text2Speech">
+            <TextToSpeech />
           </Route>
         </Switch>
 
