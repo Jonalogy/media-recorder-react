@@ -5,18 +5,23 @@
   "homepage": "https://jonalogy.github.io/media-recorder-react/",
   "dependencies": {
     "@types/jest": "^24.0.18",
+    "@types/lodash": "^4.14.144",
     "@types/node": "^12.7.12",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
     "@types/react-router-dom": "^5.1.0",
+    "bulma": "^0.7.5",
     "gh-pages": "^2.1.1",
     "install": "^0.13.0",
+    "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
     "npm": "^6.12.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "redux": "^4.0.4",
     "typescript": "^3.6.4"
   },
   "scripts": {
