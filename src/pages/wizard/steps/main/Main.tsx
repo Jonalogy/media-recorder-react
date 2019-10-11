@@ -31,12 +31,13 @@ export class Main extends React.Component<ICommonProps> {
             <div className="userDirections">
               Click &#127897; and start speaking
           </div>
-            <AudioContextRecorder {...this.props} />
+            
             <div className="mic-holder">
-              <img className="mic-button"
+              <AudioContextRecorder {...this.props} />
+              {/* <img className="mic-button"
                 src={recordButtonImg}
                 alt="record"
-                onClick={this.onClickRecord} />
+                onClick={this.onClickRecord} /> */}
               {/* <div className="mic-button"
                  onClick={() => props.nextStep("result")} /> */}
             </div>

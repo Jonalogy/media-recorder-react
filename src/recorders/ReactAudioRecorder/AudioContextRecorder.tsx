@@ -4,7 +4,9 @@ import downloadBlob from "./downloadBlob.ts";
 // @ts-ignore
 import WAVEInterface from "./waveInterface.ts";
 import { API } from "api";
+import recordButtonImg from "images/button-record.svg";
 import { ICommonProps } from "pages/wizard/Wizard";
+import "./AudioContextRecorder.scss"
 
 // Forked from https://github.com/danrouse/react-audio-recorder
 interface IAudioRecorderChangeEvent {
@@ -37,7 +39,7 @@ interface IAudioRecorderProps extends ICommonProps {
   nextStep: (s: string) => void;
 }
 
-interface IAudioRecorderState  {
+interface IAudioRecorderState {
   isRecording: boolean;
   isPlaying: boolean;
   audioData?: Blob | null;
@@ -81,6 +83,13 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
         isPlaying: false,
         isRecording: false,
       });
+    }
+  }
+
+  public componentDidUpdate () {
+    console.log(this.state.audioData);
+    if(this.state.audioData) {
+      this.onSendClick()
     }
   }
 
@@ -170,18 +179,22 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
   }
 
   public onSendClick = () => {
+    console.log("onSendClick")
     const formData = new FormData();
     formData.append("file", this.state.audioData as Blob);
     fetch(API.speechtotextdefault, {
       method: "POST",
       body: formData
     })
-    .then((res: Response) => res.text())
-    .catch(err => console.error(err))
-    .then((res) => {
-      this.props.nextStep("result")
-      this.props.nextRootState({ predictedResult: res || "" })
-    })
+      .then((res: Response) => res.text())
+      .catch(err => console.error(err))
+      .then((res) => {
+        this.props.nextStep("result")
+        this.props.nextRootState({ predictedResult: res || "" })
+        this.setState({
+          audioData: null
+        })
+      })
   }
 
   public render() {
@@ -200,10 +213,14 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
         >
           {this.state.audioData && !this.state.isPlaying && this.props.playLabel}
           {this.state.audioData && this.state.isPlaying && this.props.playingLabel}
-          {!this.state.audioData && !this.state.isRecording && this.props.recordLabel}
+          {!this.state.audioData && !this.state.isRecording && (
+            <img className="mic-button"
+              src={recordButtonImg}
+              alt="record" />
+          )}
           {!this.state.audioData && this.state.isRecording && this.props.recordingLabel}
         </button>
-        { false && this.state.audioData &&
+        {false && this.state.audioData &&
           <button
             className="AudioRecorder-remove"
             onClick={this.onRemoveClick}
