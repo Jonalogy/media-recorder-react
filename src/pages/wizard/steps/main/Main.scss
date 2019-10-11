@@ -1,39 +1,47 @@
 @import "../../../common.scss";
 
-.Page {
-  @extend %column;
-  height: 100%;
+.Main {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  
+  .MainBody {
+    align-self: center;
+    height: 80%;
+    flex: 0 0 80%;
+    border: 1px solid red;
 
-  .Top {
-    @extend %section;
-
-    .mainText {
-      text-align: center;
-      font-size: $largeFont;
-    }
+    display: flex;
+    flex-direction: column;
   }
-  
-  .Middle {
-    @extend %section;
+
+}
+
+.Top {
+  @extend %section;
+
+  .mainText {
+    text-align: center;
+    font-size: $largeFont;
   }
-  
-  .Bottom {
-    @extend %section;
-    justify-content: space-evenly;
-  
-    .userDirections {
-      text-align: center;
-    }
+}
 
-    .mic-holder {
-      @extend %row;
-      justify-content: center;
-      height: 5em;
+.Middle {
+  @extend %section;
+}
 
-      
-    }
+.Bottom {
+  @extend %section;
+  justify-content: space-evenly;
+
+  .userDirections {
+    text-align: center;
+  }
+
+  .mic-holder {
+    @extend %row;
+    justify-content: center;
+    height: 5em;
   }
 }
 

@@ -18,3 +18,12 @@
 
 $largeFont: 3em;
 $normalFont: 1em;
+
+%buttonStyle {
+  height: 2em;
+  width: max-content;
+  border-radius: 4px;
+  font-size: $normalFont;
+  font-weight: bold;
+  border: 1px solid cornflowerblue;
+}

@@ -34,6 +34,8 @@ function App() {
     state,
     setState: (o) => nextState(_fp.merge(state, o))
   };
+
+  console.log(`Environment: ${process.env.NODE_ENV}`)
   return (
     <div className="App">
       <Router>
@@ -42,9 +44,7 @@ function App() {
         <Link to="/text2Speech">Text2Speech</Link> */}
         <Switch>
           <Route exact path="/">
-            <Page>
               <Wizard {...props}/>
-            </Page>
           </Route>
           <Route exact path="/bar">
             <AudioContextRecorder filename="recording.wav" />
