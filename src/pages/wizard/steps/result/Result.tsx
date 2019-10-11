@@ -110,7 +110,7 @@ export class Result extends React.Component<ICommonProps> {
   private getTextRef = (r: HTMLTextAreaElement) => {
     if (!this.textAreaRef) {
       this.textAreaRef = r
-      this.textAreaRef.focus()
+      if(this.textAreaRef) { this.textAreaRef.focus() }
     }
   }
 
