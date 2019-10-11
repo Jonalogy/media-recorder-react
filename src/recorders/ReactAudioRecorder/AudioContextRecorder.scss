@@ -4,3 +4,11 @@
   background-color: $background-theme-color;
   border: none;
 }
+
+.stopRecordingButton {
+  @extend %buttonStyle;
+  
+  background-color: $primary-color;
+  font-size: 2em;
+  color: white
+}

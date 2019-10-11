@@ -12,7 +12,7 @@ export class Main extends React.Component<ICommonProps> {
     this.props.nextRootState({ predictedResult: "Hello There" })
   }
 
-  render () {
+  render() {
     return (
       <div className="Main">
         <div className="MainBody">
@@ -24,14 +24,12 @@ export class Main extends React.Component<ICommonProps> {
           </section>
 
           <section className="Middle">
-
+            <div className="userDirections">
+              Click &#127897; and start speaking
+            </div>
           </section>
 
           <section className="Bottom">
-            <div className="userDirections">
-              Click &#127897; and start speaking
-          </div>
-            
             <div className="mic-holder">
               <AudioContextRecorder {...this.props} />
               {/* <img className="mic-button"
@@ -44,7 +42,7 @@ export class Main extends React.Component<ICommonProps> {
           </section>
 
         </div>
-    
+
       </div>
     )
   }

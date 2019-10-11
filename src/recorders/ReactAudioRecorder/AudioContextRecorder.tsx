@@ -86,9 +86,9 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
     }
   }
 
-  public componentDidUpdate () {
+  public componentDidUpdate() {
     console.log(this.state.audioData);
-    if(this.state.audioData) {
+    if (this.state.audioData) {
       this.onSendClick()
     }
   }
@@ -122,6 +122,7 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
         audioData: this.waveInterface.audioData,
       });
     }
+    this.startPlayback();
   }
 
   public startPlayback() {
@@ -218,7 +219,11 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
               src={recordButtonImg}
               alt="record" />
           )}
-          {!this.state.audioData && this.state.isRecording && this.props.recordingLabel}
+          {!this.state.audioData && this.state.isRecording && (
+            <button className="stopRecordingButton">
+              End Recording
+            </button>
+          )}
         </button>
         {false && this.state.audioData &&
           <button
@@ -228,7 +233,7 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
             {this.props.removeLabel}
           </button>
         }
-        {this.state.audioData && this.props.downloadable &&
+        {false && this.state.audioData && this.props.downloadable &&
           <>
             {/* <button
               className="AudioRecorder-download"
