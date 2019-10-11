@@ -9,7 +9,7 @@ export class Main extends React.Component<ICommonProps> {
 
   onClickRecord = () => {
     this.props.nextStep("result")
-    this.props.setState({ predictedResult: "Hello There" })
+    this.props.nextRootState({ predictedResult: "Hello There" })
   }
 
   render () {

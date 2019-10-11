@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { ICommonProps } from "pages/wizard/Wizard";
 import "./Result.scss"
 
@@ -66,7 +65,7 @@ export class Result extends React.Component<ICommonProps> {
   }
 
   onUserType = (e: React.ChangeEvent) => {
-    this.props.setState({
+    this.props.nextRootState({
       // @ts-ignore
       correctedResult: e.target.value
     })

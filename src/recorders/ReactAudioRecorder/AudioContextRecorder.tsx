@@ -4,6 +4,7 @@ import downloadBlob from "./downloadBlob.ts";
 // @ts-ignore
 import WAVEInterface from "./waveInterface.ts";
 import { API } from "api";
+import { ICommonProps } from "pages/wizard/Wizard";
 
 // Forked from https://github.com/danrouse/react-audio-recorder
 interface IAudioRecorderChangeEvent {
@@ -11,7 +12,7 @@ interface IAudioRecorderChangeEvent {
   audioData?: Blob | null;
 }
 
-interface IAudioRecorderProps {
+interface IAudioRecorderProps extends ICommonProps {
   initialAudio?: Blob;
   downloadable?: boolean;
   loop?: boolean;
@@ -36,7 +37,7 @@ interface IAudioRecorderProps {
   nextStep: (s: string) => void;
 }
 
-interface IAudioRecorderState {
+interface IAudioRecorderState  {
   isRecording: boolean;
   isPlaying: boolean;
   audioData?: Blob | null;
@@ -170,16 +171,16 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
 
   public onSendClick = () => {
     const formData = new FormData();
-    formData.append("audio", this.state.audioData as Blob);
-    fetch(API.speechToText, {
+    formData.append("file", this.state.audioData as Blob);
+    fetch(API.speechtotextdefault, {
       method: "POST",
       body: formData
     })
-    .then((res: Response) => res.json())
+    .then((res: Response) => res.text())
     .catch(err => console.error(err))
-    .then(res => {
-      console.log(res)
+    .then((res) => {
       this.props.nextStep("result")
+      this.props.nextRootState({ predictedResult: res || "" })
     })
   }
 

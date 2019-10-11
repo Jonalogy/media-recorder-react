@@ -12,7 +12,6 @@ import AudioMediaRecorder from './recorders/AudioMediaRecorder';
 // @ts-ignore
 import AudioContextRecorder from 'recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
 import { TextToSpeech } from 'pages/TextToSpeech';
-import { Page } from 'pages/Page';
 import { Wizard } from 'pages/wizard/Wizard';
 
 import './App.scss';
@@ -23,7 +22,7 @@ interface IState {
 }
 export interface IRootState {
   state: IState;
-  setState: React.Dispatch<React.SetStateAction<Partial<IState>>>;
+  nextRootState: React.Dispatch<React.SetStateAction<Partial<IState>>>;
 }
 function App() {
   const [state, nextState] = useState({
@@ -32,7 +31,7 @@ function App() {
   })
   const props: IRootState = { 
     state,
-    setState: (o) => nextState(_fp.merge(state, o))
+    nextRootState: (o) => nextState(_fp.merge(state, o))
   };
 
   console.log(`Environment: ${process.env.NODE_ENV}`)
