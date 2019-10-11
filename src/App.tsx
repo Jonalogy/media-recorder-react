@@ -4,11 +4,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import * as _fp from "lodash/fp";
 
-import AudioMediaRecorder from './recorders/AudioMediaRecorder';
 // @ts-ignore
 import AudioContextRecorder from 'recorders/ReactAudioRecorder/AudioContextRecorder.tsx';
 import { TextToSpeech } from 'pages/TextToSpeech';

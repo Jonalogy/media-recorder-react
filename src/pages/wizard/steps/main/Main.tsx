@@ -3,9 +3,6 @@ import { ICommonProps } from "../../Wizard";
 import AudioContextRecorder from "recorders/ReactAudioRecorder/AudioContextRecorder";
 
 import "./Main.scss"
-import recordButtonImg from "images/button-record.svg";
-import { API } from "api";
-import WAVEInterface from "recorders/ReactAudioRecorder/waveInterface";
 
 export class Main extends React.Component<ICommonProps> {
 
