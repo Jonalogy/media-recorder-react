@@ -3,19 +3,27 @@ import { ICommonProps } from "pages/wizard/Wizard";
 import "./Result.scss"
 
 export class Result extends React.Component<ICommonProps> {
-
+  textAreaRef: HTMLTextAreaElement | null = null;
+  
   state = {
     userToCorrect: false
   }
+  
+  componentWillUnmount () {
+    this.textAreaRef = null
+  }
 
   render() {
+    const { predictedResult } = this.props.state;
     return (
       <div className="Result">
         <div className="ResultBody">
           <section className="Top">
-            <p>This is my suggestion:</p>
+            <p className="userDirections">
+              This is my suggestion:
+            </p>
             <div className="mainText">
-              <h4>{this.props.state.predictedResult}</h4>
+              <h4>{predictedResult || "I'm sorry, I don't know what you said..."}</h4>
             </div>
           </section>
           {/* <section className="Middle">
@@ -35,12 +43,13 @@ export class Result extends React.Component<ICommonProps> {
                   <button
                     className="enableTextAreaButton"
                     onClick={this.onUserClickToType}>
-                    I want to type
+                    No, this is what I said
                   </button>
                 </div> :
                 <div className="textArea">
                   <textarea
                     className="textArea__Input"
+                    ref={this.getTextRef}
                     onChange={this.onUserType} />
                   <button
                     className="sendCorrectionButton"
@@ -57,14 +66,21 @@ export class Result extends React.Component<ICommonProps> {
     )
   }
 
-  onUserClickToType = () => {
+  private onUserClickToType = () => {
     this.setState({ userToCorrect: true })
   }
 
-  onUserType = (e: React.ChangeEvent) => {
+  private onUserType = (e: React.ChangeEvent) => {
     this.props.nextRootState({
       // @ts-ignore
       correctedResult: e.target.value
     })
+  }
+
+  private getTextRef = (r: HTMLTextAreaElement) => {
+    if(!this.textAreaRef) {
+      this.textAreaRef = r
+      this.textAreaRef.focus()
+    }
   }
 }

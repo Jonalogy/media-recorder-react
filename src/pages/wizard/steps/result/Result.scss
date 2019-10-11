@@ -17,8 +17,10 @@
 }
 
 .Top {
-  // @extend %section;
-
+  .userDirections{
+    font-size: 2em;
+    text-align: left;
+  }
   .mainText {
     text-align: center;
     font-size: $largeFont;
