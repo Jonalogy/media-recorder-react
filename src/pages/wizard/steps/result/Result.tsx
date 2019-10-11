@@ -15,12 +15,7 @@ export class Result extends React.Component<ICommonProps> {
     this.textAreaRef = null
   }
 
-  componentDidMount() {
-    console.log("predictedResult:", this.props.state.predictedResult)
-  }
-
   render() {
-    console.log(this.props.state.correctedResult)
     const { predictedResult } = this.props.state;
     return (
       <>
@@ -91,12 +86,9 @@ export class Result extends React.Component<ICommonProps> {
       `${API.texttospeecharray}?text=${text}`,
       { method: "POST" }
     )
-      .then((res: Response) => {
-        return res.blob()
-      })
+      .then((res: Response) => res.blob())
       // @ts-ignore
       .then((audioData: Blob | undefined) => {
-        console.log(audioData)
         const wavInterface = new WAVEInterface()
         wavInterface.startPlayback({
           customAudioData: audioData
