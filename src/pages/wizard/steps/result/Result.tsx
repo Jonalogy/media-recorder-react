@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommonProps } from "pages/wizard/Wizard";
 import "./Result.scss"
+import WAVEInterface from "recorders/ReactAudioRecorder/waveInterface";
+import { API } from "api";
 
 export class Result extends React.Component<ICommonProps> {
   textAreaRef: HTMLTextAreaElement | null = null;
@@ -60,7 +62,7 @@ export class Result extends React.Component<ICommonProps> {
                       onChange={this.onUserType} />
                     <button
                       className="sendCorrectionButton"
-                      onClick={this.onUserClickToType}>
+                      onClick={this.onUserClickToSendTypedCorrection}>
                       Send
                   </button>
                   </div>
@@ -77,6 +79,22 @@ export class Result extends React.Component<ICommonProps> {
 
   private onUserClickToType = () => {
     this.setState({ userToCorrect: true })
+  }
+
+  private onUserClickToSendTypedCorrection = () => {
+    const text = "text to speech is working"
+    fetch(`${API.texttospeecharray}?text=text to speech is working`, { method: "POST" })
+      .then((res: Response) => {
+        return res.blob()
+      })
+      // @ts-ignore
+      .then((audioData: Blob | undefined) => {
+        console.log(audioData)
+        const wavInterface = new WAVEInterface()
+        wavInterface.startPlayback({
+          customAudioData: audioData
+        })
+      })
   }
 
   private onUserType = (e: React.ChangeEvent) => {
