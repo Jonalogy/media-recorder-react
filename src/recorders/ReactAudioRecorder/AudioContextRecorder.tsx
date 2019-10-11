@@ -44,7 +44,7 @@ interface IAudioRecorderState {
   isPlaying: boolean;
   audioData?: Blob | null;
   mediaStream?: MediaStream;
-  playedEntrySpeech: boolean;
+  playedEntrySpeech: boolean; // To ensure entrySpeech is only played once
 }
 
 export default class AudioContextRecorder extends React.Component<IAudioRecorderProps, IAudioRecorderState> {
@@ -89,7 +89,6 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
   }
 
   public componentDidUpdate() {
-    console.log("componentDidUpdate", this.state.audioData);
     if (this.state.audioData && !this.state.playedEntrySpeech ) {
       this.onSendClick()
       this.setState({ playedEntrySpeech: true })
