@@ -68,11 +68,16 @@ export default class WAVEInterface {
     }
   }
 
-  public startPlayback(loop: boolean = false, onended: () => void) {
+  public startPlayback(config: {
+    customAudioData?: Blob,
+    loop?: boolean,
+    onended?: () => void
+  }) {
+    const { customAudioData, loop, onended } = config;
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       try {
-        reader.readAsArrayBuffer(this.audioData!!);
+        reader.readAsArrayBuffer(customAudioData || this.audioData!!);
       } catch (e) {
         reject(new Error("Audio Data is empty!"));
       }

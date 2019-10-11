@@ -127,7 +127,10 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
 
   public startPlayback() {
     if (!this.state.isPlaying) {
-      this.waveInterface.startPlayback(this.props.loop, this.onAudioEnded)
+      this.waveInterface.startPlayback({
+        loop: this.props.loop,
+        onended: this.onAudioEnded
+      })
         .then(() => {
           this.setState({ isPlaying: true });
           if (this.props.onPlay) { this.props.onPlay(); }

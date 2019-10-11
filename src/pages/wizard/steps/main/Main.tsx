@@ -4,12 +4,13 @@ import AudioContextRecorder from "recorders/ReactAudioRecorder/AudioContextRecor
 
 import "./Main.scss"
 import recordButtonImg from "images/button-record.svg";
+import { API } from "api";
+import WAVEInterface from "recorders/ReactAudioRecorder/waveInterface";
 
 export class Main extends React.Component<ICommonProps> {
 
-  onClickRecord = () => {
-    this.props.nextStep("result")
-    this.props.nextRootState({ predictedResult: "Hello There" })
+  componentDidMount = () => {
+    this.textToSpeech()
   }
 
   render() {
@@ -45,5 +46,22 @@ export class Main extends React.Component<ICommonProps> {
 
       </div>
     )
+  }
+  private textToSpeech() {
+    const text = "text to speech is working"
+    // @ts-ignore
+    fetch(`${API.texttospeecharray}?text=text to speech is working`, { method: "POST" })
+      .then((res: Response) => {
+        return res.blob()
+      })
+      // @ts-ignore
+      .then((audioData: Blob | undefined) => {
+        console.log(audioData)
+        const wavInterface = new WAVEInterface()
+        wavInterface.startPlayback({
+          customAudioData: audioData
+        })
+      })
+
   }
 }
