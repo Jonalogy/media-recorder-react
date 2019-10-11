@@ -4,65 +4,74 @@ import "./Result.scss"
 
 export class Result extends React.Component<ICommonProps> {
   textAreaRef: HTMLTextAreaElement | null = null;
-  
+
   state = {
     userToCorrect: false
   }
-  
-  componentWillUnmount () {
+
+  componentWillUnmount() {
     this.textAreaRef = null
   }
 
   render() {
     const { predictedResult } = this.props.state;
     return (
-      <div className="Result">
-        <div className="ResultBody">
-          <section className="Top">
-            <p className="userDirections">
-              This is my suggestion:
+      <>
+        <button
+          className="backButton"
+          onClick={this.navigateBackToRecord}  >
+          Back to Record again
+        </button>
+
+        <div className="Result">
+          <div className="ResultBody">
+            <section className="Top">
+              <p className="userDirections">
+                This is my suggestion:
             </p>
-            <div className="mainText">
-              <h4>{predictedResult || "I'm sorry, I don't know what you said..."}</h4>
-            </div>
-          </section>
-          {/* <section className="Middle">
+              <div className="mainText">
+                <h4>{predictedResult || "I'm sorry, I don't know what you said..."}</h4>
+              </div>
+            </section>
+            {/* <section className="Middle">
           <a className="playButton">
             <img src={recordButtonImg} />
           </a>
         </section> */}
-          <section className="Bottom">
-            <br /><br />
-            {
-              !this.state.userToCorrect ?
-                <div className="textAreaInactive">
-                  Not what you were looking for?
-                  Just type it out and it would help me
-                  improve your experience in future.
+            <section className="Bottom">
+              <br /><br />
+              {
+                !this.state.userToCorrect ?
+                  <div className="textAreaInactive">
+                    Not what you were looking for?
+                    Just type it out and it would help me
+                    improve your experience in future.
                   <br /><br />
-                  <button
-                    className="enableTextAreaButton"
-                    onClick={this.onUserClickToType}>
-                    No, this is what I said
+                    <button
+                      className="enableTextAreaButton"
+                      onClick={this.onUserClickToType}>
+                      No, this is what I said
                   </button>
-                </div> :
-                <div className="textArea">
-                  <textarea
-                    className="textArea__Input"
-                    ref={this.getTextRef}
-                    onChange={this.onUserType} />
-                  <button
-                    className="sendCorrectionButton"
-                    onClick={this.onUserClickToType}>
-                    Send
+                  </div> :
+                  <div className="textArea">
+                    <textarea
+                      className="textArea__Input"
+                      ref={this.getTextRef}
+                      onChange={this.onUserType} />
+                    <button
+                      className="sendCorrectionButton"
+                      onClick={this.onUserClickToType}>
+                      Send
                   </button>
-                </div>
+                  </div>
 
-            }
-          </section>
+              }
+            </section>
 
+          </div>
         </div>
-      </div>
+
+      </>
     )
   }
 
@@ -78,9 +87,13 @@ export class Result extends React.Component<ICommonProps> {
   }
 
   private getTextRef = (r: HTMLTextAreaElement) => {
-    if(!this.textAreaRef) {
+    if (!this.textAreaRef) {
       this.textAreaRef = r
       this.textAreaRef.focus()
     }
+  }
+
+  private navigateBackToRecord = () => {
+    this.props.nextStep("main")
   }
 }

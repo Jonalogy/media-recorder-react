@@ -1,5 +1,17 @@
 @import "../../../../common.scss";
 
+.backButton {
+  @extend %buttonStyle;
+  position: fixed;
+  top: 3em;
+  left: 3em;
+  background-color: inherit;
+  color: white;
+  font-size: 1em;
+  height: 2em;
+  border: 1px solid white
+}
+
 .Result {
   width: 100%;
   display: flex;
@@ -9,7 +21,7 @@
     align-self: center;
     height: 80%;
     flex: 0 0 80%;
-    border: 1px solid red;
+    // border: 1px solid red;
 
     display: flex;
     flex-direction: column;
@@ -20,10 +32,12 @@
   .userDirections{
     font-size: 2em;
     text-align: left;
+    margin: 0;
   }
   .mainText {
     text-align: center;
     font-size: $largeFont;
+    height: max-content;
   }
 }
 
