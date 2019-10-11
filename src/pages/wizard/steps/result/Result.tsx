@@ -16,6 +16,7 @@ export class Result extends React.Component<ICommonProps> {
   }
 
   render() {
+    console.log(this.props.state.correctedResult)
     const { predictedResult } = this.props.state;
     return (
       <>
@@ -82,8 +83,10 @@ export class Result extends React.Component<ICommonProps> {
   }
 
   private onUserClickToSendTypedCorrection = () => {
-    const text = "text to speech is working"
-    fetch(`${API.texttospeecharray}?text=text to speech is working`, { method: "POST" })
+    fetch(
+      `${API.texttospeecharray}?text=${this.props.state.correctedResult}`,
+      { method: "POST" }
+    )
       .then((res: Response) => {
         return res.blob()
       })

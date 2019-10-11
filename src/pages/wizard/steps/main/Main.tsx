@@ -9,10 +9,6 @@ import WAVEInterface from "recorders/ReactAudioRecorder/waveInterface";
 
 export class Main extends React.Component<ICommonProps> {
 
-  componentDidMount = () => {
-    this.textToSpeech()
-  }
-
   render() {
     return (
       <div className="Main">
@@ -46,22 +42,5 @@ export class Main extends React.Component<ICommonProps> {
 
       </div>
     )
-  }
-  private textToSpeech() {
-    const text = "text to speech is working"
-    // @ts-ignore
-    fetch(`${API.texttospeecharray}?text=text to speech is working`, { method: "POST" })
-      .then((res: Response) => {
-        return res.blob()
-      })
-      // @ts-ignore
-      .then((audioData: Blob | undefined) => {
-        console.log(audioData)
-        const wavInterface = new WAVEInterface()
-        wavInterface.startPlayback({
-          customAudioData: audioData
-        })
-      })
-
   }
 }
