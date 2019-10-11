@@ -24,9 +24,6 @@ export class Result extends React.Component<ICommonProps> {
           </a>
         </section> */}
           <section className="Bottom">
-            <button className="playAudioButton">
-              Click To Play
-            </button>
             <br /><br />
             {
               !this.state.userToCorrect ?
