@@ -15,6 +15,10 @@ export class Result extends React.Component<ICommonProps> {
     this.textAreaRef = null
   }
 
+  componentDidMount() {
+    console.log("predictedResult:", this.props.state.predictedResult)
+  }
+
   render() {
     console.log(this.props.state.correctedResult)
     const { predictedResult } = this.props.state;
@@ -53,7 +57,7 @@ export class Result extends React.Component<ICommonProps> {
                     <button
                       className="enableTextAreaButton"
                       onClick={this.onUserClickToType}>
-                      No, this is what I said
+                      No, this is not what I said
                   </button>
                   </div> :
                   <div className="textArea">
@@ -63,7 +67,7 @@ export class Result extends React.Component<ICommonProps> {
                       onChange={this.onUserType} />
                     <button
                       className="sendCorrectionButton"
-                      onClick={this.onUserClickToSendTypedCorrection}>
+                      onClick={() => this.onUserClickToSendTypedCorrection(this.props.state.correctedResult)}>
                       Send
                   </button>
                   </div>
@@ -82,9 +86,9 @@ export class Result extends React.Component<ICommonProps> {
     this.setState({ userToCorrect: true })
   }
 
-  private onUserClickToSendTypedCorrection = () => {
+  private onUserClickToSendTypedCorrection = (text: string) => {
     fetch(
-      `${API.texttospeecharray}?text=${this.props.state.correctedResult}`,
+      `${API.texttospeecharray}?text=${text}`,
       { method: "POST" }
     )
       .then((res: Response) => {

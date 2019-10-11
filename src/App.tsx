@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,6 +27,9 @@ function App() {
     predictedResult: "",
     correctedResult: ""
   })
+
+  // useEffect(() => {}, [])
+
   const props: IRootState = { 
     state,
     nextRootState: (o) => nextState(_fp.merge(state, o))

@@ -13,7 +13,7 @@ export class Main extends React.Component<ICommonProps> {
 
           <section className="Top">
             <div className="mainText">
-              Hello, how I can help you today?
+              Hello, how can I help you today?
           </div>
           </section>
 

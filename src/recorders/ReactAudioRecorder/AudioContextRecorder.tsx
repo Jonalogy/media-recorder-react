@@ -44,6 +44,7 @@ interface IAudioRecorderState {
   isPlaying: boolean;
   audioData?: Blob | null;
   mediaStream?: MediaStream;
+  playedEntrySpeech: boolean;
 }
 
 export default class AudioContextRecorder extends React.Component<IAudioRecorderProps, IAudioRecorderState> {
@@ -67,6 +68,7 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
     isRecording: false,
     isPlaying: false,
     audioData: this.props.initialAudio,
+    playedEntrySpeech: false
   };
 
   public componentWillReceiveProps(nextProps: IAudioRecorderProps) {
@@ -87,9 +89,10 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
   }
 
   public componentDidUpdate() {
-    console.log(this.state.audioData);
-    if (this.state.audioData) {
+    console.log("componentDidUpdate", this.state.audioData);
+    if (this.state.audioData && !this.state.playedEntrySpeech ) {
       this.onSendClick()
+      this.setState({ playedEntrySpeech: true })
     }
   }
 
@@ -122,7 +125,6 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
         audioData: this.waveInterface.audioData,
       });
     }
-    this.startPlayback();
   }
 
   public startPlayback() {
@@ -193,11 +195,16 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
       .then((res: Response) => res.text())
       .catch(err => console.error(err))
       .then((res) => {
+        let result = res || "I'm sorry, I don't know what you said..."
         this.props.nextStep("result")
-        this.props.nextRootState({ predictedResult: res || "" })
+        this.props.nextRootState({ predictedResult: result || "" })
+
         this.setState({
           audioData: null
         })
+
+        // @ts-ignore
+        onUserClickToSendTypedCorrection(result)
       })
   }
 
@@ -215,7 +222,8 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
           }
           onClick={this.onButtonClick}
         >
-          {this.state.audioData && !this.state.isPlaying && this.props.playLabel}
+          {this.state.audioData && !this.state.isPlaying && ""}
+          {/* {this.state.audioData && !this.state.isPlaying && this.props.playLabel} */}
           {this.state.audioData && this.state.isPlaying && this.props.playingLabel}
           {!this.state.audioData && !this.state.isRecording && (
             <img className="mic-button"
@@ -255,4 +263,22 @@ export default class AudioContextRecorder extends React.Component<IAudioRecorder
       </div>
     );
   }
+}
+
+const onUserClickToSendTypedCorrection = (text: string) => {
+  fetch(
+    `${API.texttospeecharray}?text=${text}`,
+    { method: "POST" }
+  )
+    .then((res: Response) => {
+      return res.blob()
+    })
+    // @ts-ignore
+    .then((audioData: Blob | undefined) => {
+      console.log(audioData)
+      const wavInterface = new WAVEInterface()
+      wavInterface.startPlayback({
+        customAudioData: audioData
+      })
+    })
 }
