@@ -1,7 +1,7 @@
-const serverOrigin = "http://localhost:5000"
+const serverOrigin = "http://137.116.142.179:8080";
 
 export const API = {
-  speechtotextdefault: `http://137.116.142.179:8080/speechtotextdefault`,
-  texttospeecharray: `http://137.116.142.179:8080/texttospeecharray`,
-  texttospeechwav: `http://137.116.142.179:8080/texttospeechwav`
+  speechtotextdefault: `${serverOrigin}/speechtotextdefault`,
+  texttospeecharray: `${serverOrigin}/texttospeecharray`,
+  texttospeechwav: `${serverOrigin}/texttospeechwav`
 }
